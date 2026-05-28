@@ -28,7 +28,6 @@ export default function Header({ onNavClick }: HeaderProps) {
     { name: "Services", id: "services-section" },
     { name: "Case Studies", id: "case-studies" },
     { name: "About Us", id: "about-us" },
-    { name: "Contact", id: "contact" },
   ];
 
   const handleTabClick = (name: string, id: string) => {
