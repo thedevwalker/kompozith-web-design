@@ -46,7 +46,7 @@ export default function Header({ onNavClick }: HeaderProps) {
   return (
     <header
       id="main-app-header"
-      className={`fixed top-0 left-0 w-full z-50 px-4 md:px-12 lg:px-20 flex items-center justify-between transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 px-8 md:px-20 lg:[padding-left:150px] lg:[padding-right:150px] flex items-center justify-between transition-all duration-300 ${
         isScrolled
           ? "bg-[#FAFBFD]/85 backdrop-blur-md border-b border-slate-200/40 shadow-[0_2px_15px_rgba(0,0,0,0.02)] h-[75px] md:h-[80px]"
           : "bg-transparent border-b border-transparent h-[100px]"
