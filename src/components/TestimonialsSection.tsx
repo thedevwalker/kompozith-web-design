@@ -128,7 +128,7 @@ export default function TestimonialsSection() {
               <span className="text-white font-sans font-black text-4xl sm:text-5.5xl tracking-tight">
                 4.7/5
               </span>
-              <p className="text-slate-350 font-sans text-xs sm:text-sm leading-snug font-medium max-w-[160px]">
+              <p className="text-slate-350 font-sans text-xs sm:text-sm opacity-100 color-white leading-snug font-medium max-w-[160px]">
                 We've delivered 100+ projects that drive real results.
               </p>
             </div>

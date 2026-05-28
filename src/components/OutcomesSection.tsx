@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowUpRight, CheckCircle2, Award, Calendar, BarChart3, Clock, Sparkles, X, ChevronRight } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Sparkles, X, ChevronRight } from "lucide-react";
 
 interface CaseStudy {
   id: string;
   title: string;
-  subtitle: string;
   category: string;
   description: string;
   imageUrl: string;
@@ -21,69 +20,87 @@ export default function OutcomesSection() {
 
   const cases: CaseStudy[] = [
     {
-      id: "automentor",
-      title: "Automentor",
-      subtitle: "AutoMentor App Mobile",
-      category: "UX Case Study",
-      description: "Bold and vibrant Branding and UI/UX for a startup with personality and edge.",
-      imageUrl: "/src/assets/images/case_study_automentor_1779962169075.png",
-      bgColor: "bg-slate-900 border-blue-500/30",
+      id: "stackwise",
+      title: "Stackwise",
+      category: "AI & SaaS",
+      description: "Tactile electronics and smart dial engineering paired with state-of-the-art SaaS automation dashboards.",
+      imageUrl: "/src/assets/images/stackwise_device_1779984819806.png",
+      bgColor: "bg-[#EAEAEA]",
+      accentColor: "#FF6230",
+      tagline: "Revolutionizing modern automated workflows with responsive tactile dials and neon halos.",
+      stats: [
+        { label: "Active Connections", value: "85,000+" },
+        { label: "Execution Latency", value: "<12ms" },
+        { label: "Workflows Animated", value: "2.4M/day" },
+      ],
+      details: [
+        "Tactile volume knob and slider physical interface feedback",
+        "Reactive neon glowing underlying halos state indicator system",
+        "Asynchronous cloud function pipeline orchestrators",
+        "Premium performance analytics dashboard scaled for multi-device view"
+      ]
+    },
+    {
+      id: "genesy",
+      title: "Genesy",
+      category: "Technology & SaaS",
+      description: "Ultra-high-definition device telemetry showing hardware rotation accuracy with custom environment resistance features.",
+      imageUrl: "/src/assets/images/genesy_lens_dial_1779984842268.png",
+      bgColor: "bg-[#0B101D]",
       accentColor: "#3B82F6",
-      tagline: "Unlocking seamless automotive mentorship guidance at the tab of a button.",
+      tagline: "Engineering ultra-high-definition industrial operations via dynamic wet adjustment knobs.",
       stats: [
-        { label: "Active Mentorship Cycles", value: "24,000+" },
-        { label: "App Store Core Rating", value: "4.9/5★" },
-        { label: "Onboarding drop-off", value: "-45%" },
+        { label: "Precision Metric", value: "0.001mm" },
+        { label: "Ingress Protection", value: "IP68 Rated" },
+        { label: "API Query Speed", value: "99.99%" },
       ],
       details: [
-        "In-depth heuristic roadmap evaluation",
-        "Dynamic geographical map-matching systems",
-        "Integrated conversational calendars and schedules",
-        "Modular dark-mode dashboard tailored for on-the-go mechanics"
+        "Photorealistic water-resistant component micro-structure modeling",
+        "Dual-action rotary dial with integrated laser indicator lights",
+        "Sub-millisecond hardware-to-cloud sync adapters",
+        "Streamlined real-time IoT status monitoring dashboards"
       ]
     },
     {
-      id: "kigoo",
-      title: "Kigoo",
-      subtitle: "Streaming Entertainment Platform",
-      category: "Creative Branding & App Design",
-      description: "Immersive entertainment streaming experience tailored with bold typography and diagonal dynamic motion Ribbons.",
-      imageUrl: "/src/assets/images/case_study_kigoo_1779962190864.png",
-      bgColor: "bg-[#4C1D95] border-[#D8B4FE]/30",
-      accentColor: "#A78BFA",
-      tagline: "Streamlining next-generation television and premium studio curation globally.",
+      id: "althor",
+      title: "Althor",
+      category: "Finance & Fintech",
+      description: "An elegant, matte silver payment gateway and interactive smart console facilitating high stakes multi-currency operations.",
+      imageUrl: "/src/assets/images/althor_device_1779984861320.png",
+      bgColor: "bg-[#ECECEC]",
+      accentColor: "#FF6230",
+      tagline: "Delivering minimalist silver terminal interactions and laser-guided micro-accounting models.",
       stats: [
-        { label: "Subscribers Reached", value: "1.2 Million" },
-        { label: "Daily Active Engagement", value: "+85%" },
-        { label: "Avg Viewing Session", value: "84 mins" },
+        { label: "Transaction Value", value: "$1.4 Billion" },
+        { label: "Onboarding Path", value: "Only 45s" },
+        { label: "Compliance Score", value: "100/100" },
       ],
       details: [
-        "Interactive Diagonal Tape-Ribbon UI mechanics",
-        "Optimized client-side responsive image delivery layers",
-        "Dynamic content recommendation models",
-        "Ultra-low latency custom web video engine controller"
+        "Futuristic structural shell with dynamic linear LED neon alignment",
+        "Ultra-secured public key cryptographic layer standard",
+        "Microsecond transaction broadcast queue handlers",
+        "Seamless international banking ledger interfaces"
       ]
     },
     {
-      id: "monlook",
-      title: "Mon Look",
-      subtitle: "Personal Styling Social Portal",
-      category: "Fashion Tech UI/UX",
-      description: "Bespoke fashion consulting interface optimizing conversions. Scaled on pastel palettes.",
-      imageUrl: "/src/assets/images/case_study_monlook_1779962211255.png",
-      bgColor: "bg-[#FAECF0]/80 border-rose-300/30",
-      accentColor: "#FB7185",
-      tagline: "Putting full personal closets on high-street digital visualizers.",
+      id: "etery",
+      title: "Etery",
+      category: "E-commerce",
+      description: "Tactile material-black composite equipment styling combined with fluid shopping portals to unlock premium customer actions.",
+      imageUrl: "/src/assets/images/etery_device_1779984882142.png",
+      bgColor: "bg-[#1C202E]",
+      accentColor: "#FF6230",
+      tagline: "Simplifying premium audio design systems through tactile custom state managers and buttons.",
       stats: [
-        { label: "Stylist Sales Boost", value: "+140%" },
-        { label: "User Retention Rate", value: "92%" },
-        { label: "Daily Styling Uploads", value: "8,500+" },
+        { label: "Conversion Rate Boost", value: "+44%" },
+        { label: "Audio Playback Uptime", value: "99.999%" },
+        { label: "Mobile Bounce Rate", value: "-28%" },
       ],
       details: [
-        "Fluid pastel-pink interactive color theme configurations",
-        "Trio-phone slider rendering for premium catalog reviews",
-        "One-click stylist session reservation workflow",
-        "Secured enterprise payment gateway links"
+        "Rich sensory composite materials visual alignment guidelines",
+        "Synchronized physical state animations via React and Tailwind",
+        "Instant checkout mechanics with fully reactive tactile buttons",
+        "Elastic-search product catalog with customized metadata arrays"
       ]
     }
   ];
@@ -91,91 +108,87 @@ export default function OutcomesSection() {
   return (
     <section
       id="case-studies"
-      className="relative w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 bg-white"
+      className="relative w-full py-24 px-4 sm:px-8 md:px-12 lg:px-20 bg-white"
     >
       {/* Structural layout row matching the screenshot */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-14 relative z-10">
-        <div className="flex flex-col items-start text-left">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-16 relative z-10 text-left">
+        <div className="flex flex-col items-start">
           {/* Accent Badge */}
-          <div className="bg-[#1A2540] text-white px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5 flex items-center gap-1.5 shadow-sm">
+          <div className="bg-[#1A2540] text-white px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest mb-5 flex items-center gap-1.5 shadow-xs">
             Work
           </div>
 
-          <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl tracking-tight leading-none">
+          <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl tracking-tight leading-tight">
             The outcomes we've got.
           </h2>
         </div>
 
         {/* Right strategic description */}
-        <div className="flex items-center h-full md:pt-10 text-left">
-          <p className="text-slate-600 font-sans text-sm sm:text-base md:text-lg font-normal leading-relaxed max-w-lg">
-            A look at some of the brands we've helped — and the outcomes we've delivered.
+        <div className="flex items-center h-full md:pt-10">
+          <p className="text-slate-500 font-sans text-sm sm:text-base font-normal leading-relaxed max-w-lg">
+            A look at some of the brands we've helped — and the outcomes we've delivered with precision engineering and high fidelity design.
           </p>
         </div>
       </div>
 
-      {/* Styled Staggered Stacked Case Studies */}
-      <div className="max-w-7xl mx-auto space-y-8" id="outcomes-cards-list">
+      {/* Grid container replicating the visual mock accurately */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6" id="outcomes-cards-grid">
         {cases.map((study) => (
           <div
             key={study.id}
             onClick={() => setSelectedCase(study)}
-            className={`group relative overflow-hidden rounded-[32px] border ${study.bgColor} p-6 sm:p-10 lg:p-12 cursor-pointer transition-all duration-500 hover:shadow-[0_24px_50px_rgba(0,0,0,0.12)] flex flex-col md:grid md:grid-cols-12 gap-8 items-center text-left`}
+            className="group relative overflow-hidden rounded-[24px] border border-slate-100/80 cursor-pointer bg-slate-50 aspect-[4/3] flex flex-col justify-end transition-all duration-500 hover:shadow-lg hover:border-slate-200/40"
           >
-            {/* Background glowing lighting flare inside cards */}
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/20 via-black/0 to-transparent pointer-events-none" />
-
-            {/* Left Content Column */}
-            <div className="md:col-span-4 flex flex-col justify-between h-full space-y-12 z-10">
-              {/* Card Badge / Title Block */}
-              <div>
-                <span className="text-xs uppercase font-mono font-black tracking-widest text-[#FF6230] mb-3 inline-block">
-                  {study.category}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-sans font-black text-white mix-blend-difference">
-                  {study.subtitle}
-                </h3>
-              </div>
-
-              {/* Bottom Info Row */}
-              <div>
-                <h4 className="text-md font-sans font-extrabold text-[#FFAE96] capitalize tracking-wide mb-1">
-                  {study.title}
-                </h4>
-                <p className="text-slate-300 font-sans text-xs sm:text-sm leading-relaxed font-normal max-w-sm">
-                  {study.description}
-                </p>
-              </div>
-            </div>
-
-            {/* Center / Right Picture Column */}
-            <div className="md:col-span-8 w-full h-full min-h-[220px] sm:min-h-[350px] overflow-hidden rounded-2xl relative z-10 border border-white/5 shadow-2xl">
+            {/* Main high fidelity device mockup image */}
+            <div className="absolute inset-0 w-full h-full">
               <img
                 src={study.imageUrl}
-                alt={study.subtitle}
+                alt={study.title}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover group-hover:scale-[1.025] transition-transform duration-700 ease-out will-change-transform"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] will-change-transform"
               />
-
-              {/* High End Floating Open case study Badge */}
-              <div className="absolute top-5 right-5 z-20">
-                <div className="bg-white/95 backdrop-blur-md text-[#1A2540] hover:bg-white px-4.5 py-2.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-2 transition-all duration-300 group-hover:scale-105">
-                  <span>Open case study</span>
-                  <div className="w-5 h-5 rounded-full bg-[#FF6230] flex items-center justify-center text-white">
-                    <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Hover card border shadow transition indicator overlay */}
-              <div className="absolute inset-0 bg-transparent group-hover:bg-gradient-to-t group-hover:from-black/10 transition-colors duration-500 pointer-events-none" />
             </div>
 
+            {/* Gradient shadow overlay behind content so text is readable */}
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+
+            {/* White floating card layout matching reference exactly */}
+            <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 flex items-center justify-between shadow-xs border border-white/40 transition-all duration-300 group-hover:shadow-md group-hover:bg-white z-10">
+              <div className="text-left">
+                <h3 className="text-[#1A2540] font-sans font-bold text-sm sm:text-base tracking-tight leading-none mb-1 shadow-none">
+                  {study.title}
+                </h3>
+                <p className="text-slate-500 font-sans text-xs font-normal">
+                  {study.category}
+                </p>
+              </div>
+
+              {/* Box diagonal arrow container */}
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#111827] group-hover:bg-[#FF6230] text-white flex items-center justify-center transition-all duration-300 shadow-sm shrink-0">
+                <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+              </div>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Modern Dialog Detailed Modal Showcase representation */}
+      {/* Styledcentered View all projects button matching reference exactly */}
+      <div className="flex justify-center mt-12">
+        <button
+          onClick={() => {
+            const el = document.getElementById("faq-section");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/80 rounded-full font-sans font-bold text-xs sm:text-sm shadow-xs transition-all duration-200 flex items-center gap-3.5 cursor-pointer active:scale-95"
+        >
+          <span className="font-sans font-bold tracking-tight">View all projects</span>
+          <div className="w-7 h-7 rounded-full bg-[#111827] text-white flex items-center justify-center shrink-0">
+            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+          </div>
+        </button>
+      </div>
+
+      {/* Interactive Modal Details Overlay */}
       <AnimatePresence>
         {selectedCase && (
           <>
@@ -201,7 +214,7 @@ export default function OutcomesSection() {
               <div className="relative h-48 sm:h-64 md:h-72 w-full shrink-0">
                 <img
                   src={selectedCase.imageUrl}
-                  alt={selectedCase.subtitle}
+                  alt={selectedCase.title}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
                 />
@@ -219,7 +232,7 @@ export default function OutcomesSection() {
 
                 {/* Left Floating Metadata Overlay */}
                 <div className="absolute bottom-6 left-6 md:left-9 text-white">
-                  <span className="text-xs uppercase font-mono font-bold tracking-widest text-[#FFAE96] bg-[#FF6230] px-2.5 py-1 rounded-sm mb-2.5 inline-block">
+                  <span className="text-xs uppercase font-sans font-bold tracking-widest text-[#FFAE96] bg-[#FF6230] px-2.5 py-1 rounded-sm mb-2.5 inline-block">
                     {selectedCase.category}
                   </span>
                   <h3 className="text-2xl sm:text-3xl md:text-4xl font-sans font-black tracking-tight leading-none mt-1">
@@ -232,7 +245,7 @@ export default function OutcomesSection() {
               <div className="p-6 md:p-9 overflow-y-auto space-y-8 flex-grow">
                 {/* Tagline sentence */}
                 <div className="border-l-4 border-[#FF6230] pl-5">
-                  <p className="text-lg md:text-xl font-normal text-[#1A2540] italic leading-relaxed">
+                  <p className="text-lg md:text-xl font-sans font-normal text-[#1A2540] italic leading-relaxed">
                     "{selectedCase.tagline}"
                   </p>
                 </div>
@@ -242,12 +255,12 @@ export default function OutcomesSection() {
                   {selectedCase.stats.map((stat) => (
                     <div
                       key={stat.label}
-                      className="bg-[#F4F6FB] border border-slate-100 p-5 rounded-2xl flex flex-col justify-center items-center text-center shadow-2xs"
+                      className="bg-[#F4F6FB] border border-slate-100 p-5 rounded-2xl flex flex-col justify-center items-center text-center shadow-xs"
                     >
-                      <span className="text-[#FF6230] font-sans font-black text-2.5xl sm:text-3xl tracking-tight mb-1">
+                      <span className="text-[#FF6230] font-sans font-black text-2xl sm:text-3xl tracking-tight mb-1">
                         {stat.value}
                       </span>
-                      <span className="text-slate-500 font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
+                      <span className="text-slate-500 font-sans text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
                         {stat.label}
                       </span>
                     </div>
@@ -257,7 +270,7 @@ export default function OutcomesSection() {
                 {/* Feature breakdown lists */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                   <div>
-                    <h4 className="text-[#1A2540] font-sans font-extrabold text-md md:text-lg mb-4 flex items-center gap-2">
+                    <h4 className="text-[#1A2540] font-sans font-black text-md md:text-lg mb-4 flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-[#FF6230]" />
                       Core Solutions Delivered
                     </h4>
@@ -267,7 +280,7 @@ export default function OutcomesSection() {
                   </div>
 
                   <div>
-                    <h4 className="text-[#1A2540] font-sans font-extrabold text-md md:text-lg mb-4">
+                    <h4 className="text-[#1A2540] font-sans font-black text-md md:text-lg mb-4">
                       Engineering Scope
                     </h4>
                     <ul className="space-y-3">
@@ -284,19 +297,16 @@ export default function OutcomesSection() {
 
               {/* Footer row with CTA to close and act */}
               <div className="p-6 bg-[#F4F6FB] border-t border-slate-150 flex items-center justify-between shrink-0">
-                <span className="text-slate-400 font-mono text-[11px]">
+                <span className="text-slate-400 font-sans text-[11px]">
                   Project completed successfully in 2026
                 </span>
                 <button
                   onClick={() => {
                     setSelectedCase(null);
-                    const ctc = document.getElementById("contact-form-sidebar");
+                    const ctc = document.getElementById("contact");
                     if (ctc) {
-                      // Trigger contact button behavior
-                      const btn = document.getElementById("magnetic-cta-trigger");
-                      if (btn) btn.click();
+                      ctc.scrollIntoView({ behavior: "smooth" });
                     } else {
-                      // Fallback opening
                       const event = new CustomEvent("openContactForm");
                       window.dispatchEvent(event);
                     }

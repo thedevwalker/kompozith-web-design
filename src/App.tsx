@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import { Mail, Phone, MessageSquare, Send, CheckCircle2, User, Globe, FileText, ArrowRight, ShieldCheck } from "lucide-react";
 
 import Header from "./components/Header";
@@ -12,7 +13,17 @@ import OutcomesSection from "./components/OutcomesSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import FaqSection from "./components/FaqSection";
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: 80 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 2, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export default function App() {
+  useSmoothScroll();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "", budget: "medium" });
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -86,9 +97,9 @@ export default function App() {
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25, duration: 0.6 }}
-              className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl lg:text-6.5xl tracking-tight leading-[1.05] max-w-xl"
+              className="text-[#1A2540] font-sans font-black text-9xl sm:text-5xl lg:text-6.5xl tracking-tight leading-[1.05] max-w-xl"
             >
-              We are the <span className="font-serif italic font-semibold text-[#FF6230] hover:text-[#ff794d] transition-colors duration-300">only</span> digital partner <span className="text-slate-400 font-medium">you need.</span>
+              We are the <span className="font-serif italic font-semibold text-[#FF6230] hover:text-[#ff794d] transition-colors duration-300">only</span> digital partner <span className="text-slate-400 font-black">you need.</span>
             </motion.h1>
 
             {/* Display Subheading details */}
@@ -175,22 +186,62 @@ export default function App() {
       </main>
 
       {/* Services and Accordions Viewport Section (Transition line at 780px mapped by SVG) */}
-      <ServicesSection />
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
+        <ServicesSection />
+      </motion.div>
 
       {/* Modern interactive process section */}
-      <ProcessSection />
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
+        <ProcessSection />
+      </motion.div>
 
       {/* Styled outcomes case studies section with interactive modal */}
-      <OutcomesSection />
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
+        <OutcomesSection />
+      </motion.div>
 
       {/* Testimonials success stories segment */}
-      <TestimonialsSection />
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
+        <TestimonialsSection />
+      </motion.div>
 
       {/* Interactive design subscription FAQs segment */}
-      <FaqSection />
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
+        <FaqSection />
+      </motion.div>
 
       {/* Footer Branding Showcase */}
-      <footer className="w-full bg-slate-50 border-t border-slate-100 py-12 px-6 md:px-12 lg:px-20 text-center" id="footer-branding">
+      <motion.footer
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        className="w-full bg-slate-50 border-t border-slate-100 py-12 px-6 md:px-12 lg:px-20 text-center" id="footer-branding">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center">
@@ -215,7 +266,7 @@ export default function App() {
             </span>
           </div>
         </div>
-      </footer>
+      </motion.footer>
 
       {/* Sliding Slideover Contact Drawer Component */}
       <AnimatePresence>
