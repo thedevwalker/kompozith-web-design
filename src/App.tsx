@@ -88,7 +88,7 @@ export default function App() {
               transition={{ delay: 0.25, duration: 0.6 }}
               className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl lg:text-6.5xl tracking-tight leading-[1.05] max-w-xl"
             >
-              We are the <span className="font-serif italic font-normal text-[#FF6230] hover:text-[#ff794d] transition-colors duration-300">only</span> digital partner <span className="text-slate-400 font-medium">you need.</span>
+              We are the <span className="font-serif italic font-semibold text-[#FF6230] hover:text-[#ff794d] transition-colors duration-300">only</span> digital partner <span className="text-slate-400 font-medium">you need.</span>
             </motion.h1>
 
             {/* Display Subheading details */}
@@ -152,7 +152,7 @@ export default function App() {
                 <span className="text-slate-800 font-sans font-semibold text-xs sm:text-sm tracking-tight leading-none">
                   Trusted by <span className="text-[#FF6230]">+50</span> Customers
                 </span>
-                <span className="text-slate-400 font-mono text-[10px] sm:text-xs mt-0.5 font-medium leading-none">
+                <span className="text-slate-400 font-inter text-[10px] sm:text-xs mt-0.5 font-medium leading-none">
                   They've hit their target - You're next
                 </span>
               </div>

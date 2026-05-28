@@ -65,7 +65,7 @@ export default function MagneticButton({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative py-4 px-6 flex items-center justify-center cursor-pointer select-none group focus:outline-none ${className}`}
+      className={`relative py-4 px-0 flex items-center justify-center cursor-pointer select-none group focus:outline-none ${className}`}
       onClick={onClick}
       id="magnetic-cta-container"
     >

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import logoKompozith from "../assets/images/logo-kompozith.svg";
 import { motion } from "motion/react";
 
 interface HeaderProps {
@@ -50,39 +51,12 @@ export default function Header({ onNavClick }: HeaderProps) {
       className={`fixed top-0 left-0 w-full z-50 px-4 md:px-12 lg:[padding-left:150px] lg:[padding-right:150px] flex items-center justify-between h-[75px] md:h-[80px] before:absolute before:inset-0 before:-z-10 before:backdrop-blur-xl before:[mask-image:linear-gradient(to_bottom,black_0%,black_25%,transparent_100%)]`}
     >
       {/* Brand Logo Group */}
-      <div className="flex items-center gap-2.5" id="brand-logo-container">
-        <div className="w-[38px] h-[38px] rounded-lg bg-slate-100 flex items-center justify-center shadow-sm relative overflow-hidden">
-          {/* Logo geometry - Orange-Blue folding wings as shown in image */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-blue-500/10" />
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            className="w-6 h-6 relative z-10"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M17 5L7 19"
-              stroke="#FF6230"
-              strokeWidth="4"
-              strokeLinecap="round"
-            />
-            <path
-              d="M7 5H17V15"
-              stroke="#1A2540"
-              strokeWidth="4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        <div className="flex flex-col text-left">
-          <span className="text-[#1A2540] font-sans font-bold text-base md:text-md tracking-tight leading-tight">
-            Kompozith
-          </span>
-          <span className="text-[#FF6230] font-serif italic text-sm font-semibold tracking-wide leading-none -mt-0.5">
-            Studio
-          </span>
-        </div>
+      <div className="flex items-center" id="brand-logo-container">
+        <img
+          src={logoKompozith}
+          alt="Kompozith Studio"
+          className="h-[46px] w-auto"
+        />
       </div>
 
       {/* Responsive Capsule Navigation bar */}

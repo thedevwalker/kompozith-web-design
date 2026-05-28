@@ -110,7 +110,7 @@ export default function ScrollingImagesGrid() {
         <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/2.5 transition-colors duration-500 pointer-events-none z-10" />
 
         {/* Top Header Row of Portfolio Mockup Card */}
-        <div className="flex justify-between items-start z-20">
+        {/* <div className="flex justify-between items-start z-20">
           <div>
             <span className="text-slate-500 font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100/80 backdrop-blur-sm border border-slate-200/40">
               {item.category}
@@ -121,7 +121,7 @@ export default function ScrollingImagesGrid() {
               {item.userHandle}
             </span>
           )}
-        </div>
+        </div> */}
 
         {/* Core Image Display Area */}
         <div className="my-4 flex-grow flex items-center justify-center relative overflow-hidden rounded-2xl">
@@ -133,15 +133,15 @@ export default function ScrollingImagesGrid() {
           />
 
           {/* Custom tag highlight */}
-          {item.accentTag && (
+          {/* {item.accentTag && (
             <div className="absolute top-3 left-3 bg-[#FF6230] text-white px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider shadow-sm">
               {item.accentTag}
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Card Title Content Row */}
-        <div className="flex items-end justify-between z-20 mt-2">
+        {/* <div className="flex items-end justify-between z-20 mt-2">
           <div className="max-w-[85%] text-left">
             <h4 className="text-[#1A2540] font-sans font-bold text-sm sm:text-base leading-snug tracking-tight group-hover:text-[#FF6230] transition-colors duration-300">
               {item.title}
@@ -150,7 +150,7 @@ export default function ScrollingImagesGrid() {
           <div className="w-8 h-8 rounded-full bg-slate-200/50 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
             <ArrowUpRight className="w-4 h-4 text-slate-700" />
           </div>
-        </div>
+        </div> */}
       </div>
     );
   };
