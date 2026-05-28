@@ -97,7 +97,7 @@ export default function App() {
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25, duration: 0.6 }}
-              className="text-[#1A2540] font-sans font-black text-9xl sm:text-5xl lg:text-6.5xl tracking-tight leading-[1.05] max-w-xl"
+              className="text-[#1A2540] font-sans font-black text-3xl sm:text-5xl lg:text-6.5xl tracking-tight leading-[1.05] max-w-xl"
             >
               We are the <span className="font-serif italic font-semibold text-[#FF6230] hover:text-[#ff794d] transition-colors duration-300">only</span> digital partner <span className="text-slate-400 font-black">you need.</span>
             </motion.h1>
