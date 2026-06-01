@@ -1,6 +1,20 @@
 import React from "react";
 import { motion } from "motion/react";
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 90,
+      damping: 18,
+      mass: 0.75,
+    },
+  },
+};
+
 export default function ProcessSection() {
   return (
     <section
@@ -27,7 +41,11 @@ export default function ProcessSection() {
         </div>
 
         {/* Right Side: Step 01 Discovery Call (Double Column Card) */}
-        <div
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="md:col-span-2 group relative overflow-hidden bg-gradient-to-br from-white via-slate-50/50 to-amber-100/15 border border-[#E4E9F2]/80 p-6 md:p-8 rounded-[28px] shadow-2xs hover:shadow-xs transition-all duration-500 flex flex-col sm:flex-row items-center gap-6 justify-between text-left"
           id="process-step-1"
         >
@@ -57,7 +75,7 @@ export default function ProcessSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none" />
           </div>
-        </div>
+        </motion.div>
 
       </div>
 
@@ -65,7 +83,11 @@ export default function ProcessSection() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto" id="process-bottom-row">
         
         {/* Step 02: User Research */}
-        <div
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="group relative overflow-hidden bg-gradient-to-br from-white via-[#F1F4FA]/80 to-[#D2DAE8]/20 border border-[#E2E8F4]/80 p-7 md:p-9 rounded-[28px] shadow-2xs hover:shadow-xs transition-all duration-500 flex flex-col justify-between min-h-[350px] text-left"
           id="process-step-2"
         >
@@ -86,10 +108,14 @@ export default function ProcessSection() {
               <span className="font-semibold text-slate-700">“Structure meets aesthetics.”</span> From wireframes to high-fidelity UI mockups — we craft an experience that looks great and feels intuitive.
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Step 03: Design & Build */}
-        <div
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="group relative overflow-hidden bg-gradient-to-br from-white via-[#FAF6F3]/80 to-[#FCE6D6]/20 border border-[#F2E5DC]/80 p-7 md:p-9 rounded-[28px] shadow-2xs hover:shadow-xs transition-all duration-500 flex flex-col justify-between min-h-[350px] text-left"
           id="process-step-3"
         >
@@ -110,10 +136,14 @@ export default function ProcessSection() {
               <span className="font-semibold text-slate-700">“We code exactly what we promised.”</span> Pixel-perfect development, CMS integration, performance optimization and responsive across all devices.
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Step 04: Launch & Grow */}
-        <div
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="group relative overflow-hidden bg-gradient-to-br from-white via-[#E8F1FC]/60 to-[#9AC3F7]/30 border border-[#D5E4F5]/80 p-7 md:p-9 rounded-[28px] shadow-2xs hover:shadow-xs transition-all duration-500 flex flex-col justify-between min-h-[350px] text-left"
           id="process-step-4"
         >
@@ -135,7 +165,7 @@ export default function ProcessSection() {
               <span className="font-semibold text-slate-700">“Launch day is just the beginning.”</span> We deploy, onboard your team, and keep monitoring performance so your product keeps improving.
             </p>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>

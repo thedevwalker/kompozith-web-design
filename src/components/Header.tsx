@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ArrowRight, ShieldCheck } from "lucide-react";
 import logoKompozith from "../assets/images/logo-kompozith.svg";
@@ -14,13 +14,76 @@ export default function Header({ onNavClick }: HeaderProps) {
   const navItems = [
     { name: "Home", id: "hero-top" },
     { name: "Services", id: "services-section" },
-    { name: "Case Studies", id: "case-studies" },
     { name: "Our process", id: "process-section" },
+    { name: "Case Studies", id: "case-studies" },
     { name: "Contact", id: "contact" },
   ];
 
+  const isManualScroll = useRef(false);
+  const scrollUnlockTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Mathematical precise, mounting-safe scroll-based tab activation
+  useEffect(() => {
+    const handleScroll = () => {
+      // Ignore scroll tracking during manual smooth scrolling triggered by tab clicks
+      if (isManualScroll.current) return;
+
+      const scrollPos = window.scrollY;
+
+      // 1. Absolute top edge case: Force "Home"
+      if (scrollPos < 120) {
+        setActiveTab("Home");
+        return;
+      }
+
+      // 2. Absolute bottom edge case: Force "Case Studies"
+      const isAtBottom = window.innerHeight + scrollPos >= document.documentElement.scrollHeight - 80;
+      if (isAtBottom) {
+        setActiveTab("Case Studies");
+        return;
+      }
+
+      // 3. Middle-viewport math calculation to highlight active section
+      const middleOfViewport = scrollPos + window.innerHeight * 0.4;
+      let activeSectionName = "Home";
+
+      for (const item of navItems) {
+        if (item.id === "contact") continue;
+        const element = document.getElementById(item.id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          const elementTop = rect.top + scrollPos;
+          
+          if (middleOfViewport >= elementTop - 50) {
+            activeSectionName = item.name;
+          }
+        }
+      }
+
+      setActiveTab(activeSectionName);
+    };
+
+    // Run once on load/mount to coordinate current scroll position
+    const initTimer = setTimeout(handleScroll, 120);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      clearTimeout(initTimer);
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollUnlockTimeout.current) clearTimeout(scrollUnlockTimeout.current);
+    };
+  }, []);
+
   const handleTabClick = (name: string, id: string) => {
     setActiveTab(name);
+
+    // Set scroll lock flag during smooth-scrolling to prevent "activeTab jiggling"
+    isManualScroll.current = true;
+    if (scrollUnlockTimeout.current) clearTimeout(scrollUnlockTimeout.current);
+    scrollUnlockTimeout.current = setTimeout(() => {
+      isManualScroll.current = false;
+    }, 850); // Lock stays active for typical smooth-scroll duration
+
     if (onNavClick) {
       onNavClick(id);
     } else {
@@ -65,11 +128,10 @@ export default function Header({ onNavClick }: HeaderProps) {
                   <li key={item.name} className="relative">
                     <button
                       onClick={() => handleTabClick(item.name, item.id)}
-                      className={`px-4.5 py-2 rounded-full cursor-pointer transition-colors duration-200 relative z-10 ${
-                        isActive
-                          ? "text-white"
-                          : "text-slate-300 hover:text-white"
-                      }`}
+                      className={`px-4.5 py-2 rounded-full cursor-pointer transition-colors duration-200 relative z-10 ${isActive
+                        ? "text-white"
+                        : "text-slate-300 hover:text-white"
+                        }`}
                     >
                       {item.name}
                     </button>
@@ -170,11 +232,10 @@ export default function Header({ onNavClick }: HeaderProps) {
                       >
                         <button
                           onClick={() => handleMobileTabClick(item.name, item.id)}
-                          className={`w-full text-left py-2 px-4 rounded-2xl flex items-center justify-between transition-all group ${
-                            isContact
-                              ? "bg-[#FF6230] text-white hover:bg-[#ff7548]"
-                              : "text-slate-200 hover:text-white hover:bg-white/5"
-                          }`}
+                          className={`w-full text-left py-2 px-4 rounded-2xl flex items-center justify-between transition-all group ${isContact
+                            ? "bg-[#FF6230] text-white hover:bg-[#ff7548]"
+                            : "text-slate-200 hover:text-white hover:bg-white/5"
+                            }`}
                         >
                           <span className="font-sans font-bold text-base tracking-wide">
                             {item.name}

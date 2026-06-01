@@ -1,6 +1,29 @@
 import { motion } from "motion/react";
 import { Sparkles } from "lucide-react";
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 90,
+      damping: 18,
+      mass: 0.75,
+    },
+  },
+};
+
 export default function ServicesSection() {
   const cards = [
     {
@@ -83,7 +106,7 @@ export default function ServicesSection() {
       className="relative w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 bg-white"
     >
       {/* Structural layout row matching the screenshot */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-14 relative z-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-14 relative z-10 max-w-7xl mx-auto">
         <div className="flex flex-col items-start text-left">
           {/* Accent Badge */}
           <div className="bg-[#1A2540] text-white px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5 flex items-center gap-1.5 shadow-sm">
@@ -104,13 +127,18 @@ export default function ServicesSection() {
       </div>
 
       {/* Modern 3-Column Services Card layout */}
-      <div 
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto relative z-10" 
         id="services-grid-wrapper"
       >
         {cards.map((card) => (
-          <div
+          <motion.div
             key={card.id}
+            variants={cardVariants}
             className="group flex flex-col bg-[#F4F6FB] border border-[#E4E9F2]/70 p-3.5 rounded-[28px] shadow-xs hover:shadow-md hover:border-slate-200/80 transition-all duration-500 ease-out text-left"
           >
             {/* White card container (top half) */}
@@ -154,9 +182,9 @@ export default function ServicesSection() {
               {/* Soft overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/0 to-transparent pointer-events-none" />
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

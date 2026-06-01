@@ -74,7 +74,7 @@ export default function TestimonialsSection() {
       className="relative w-full py-20 px-4 sm:px-8 md:px-12 lg:px-20 bg-[#FAFBFD]"
     >
       {/* Structural layout row matching the screenshot */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-14 relative z-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-14 relative z-10 max-w-7xl mx-auto">
         <div className="flex flex-col items-start text-left">
           {/* Accent Badge */}
           <div className="bg-[#1A2540] text-white px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5 flex items-center gap-1.5 shadow-sm">

@@ -1,6 +1,10 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "motion/react";
 import { ArrowUpRight, CheckCircle2, Sparkles, X, ChevronRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface CaseStudy {
   id: string;
@@ -17,6 +21,59 @@ interface CaseStudy {
 
 export default function OutcomesSection() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
+  const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // High performance smooth custom cursor tracking
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const springConfig = { damping: 24, stiffness: 280, mass: 0.15 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
+  useEffect(() => {
+    const updateMousePos = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+    };
+    window.addEventListener("mousemove", updateMousePos);
+    return () => {
+      window.removeEventListener("mousemove", updateMousePos);
+    };
+  }, [cursorX, cursorY]);
+
+  // GSAP horizontal scroll pinning
+  useEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
+    const ctx = gsap.context(() => {
+      // Calculate how far to scroll horizontally
+      const getScrollAmount = () => {
+        return -(track.scrollWidth - window.innerWidth);
+      };
+
+      gsap.to(track, {
+        x: getScrollAmount,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${Math.abs(getScrollAmount())}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        },
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   const cases: CaseStudy[] = [
     {
@@ -24,7 +81,7 @@ export default function OutcomesSection() {
       title: "Stackwise",
       category: "AI & SaaS",
       description: "Tactile electronics and smart dial engineering paired with state-of-the-art SaaS automation dashboards.",
-      imageUrl: "/src/assets/images/stackwise_device_1779984819806.png",
+      imageUrl: "/src/assets/images/case_study_automentor_1779962169075.png",
       bgColor: "bg-[#EAEAEA]",
       accentColor: "#FF6230",
       tagline: "Revolutionizing modern automated workflows with responsive tactile dials and neon halos.",
@@ -45,7 +102,7 @@ export default function OutcomesSection() {
       title: "Genesy",
       category: "Technology & SaaS",
       description: "Ultra-high-definition device telemetry showing hardware rotation accuracy with custom environment resistance features.",
-      imageUrl: "/src/assets/images/genesy_lens_dial_1779984842268.png",
+      imageUrl: "/src/assets/images/case_study_kigoo_1779962190864.png",
       bgColor: "bg-[#0B101D]",
       accentColor: "#3B82F6",
       tagline: "Engineering ultra-high-definition industrial operations via dynamic wet adjustment knobs.",
@@ -66,7 +123,7 @@ export default function OutcomesSection() {
       title: "Althor",
       category: "Finance & Fintech",
       description: "An elegant, matte silver payment gateway and interactive smart console facilitating high stakes multi-currency operations.",
-      imageUrl: "/src/assets/images/althor_device_1779984861320.png",
+      imageUrl: "/src/assets/images/case_study_monlook_1779962211255.png",
       bgColor: "bg-[#ECECEC]",
       accentColor: "#FF6230",
       tagline: "Delivering minimalist silver terminal interactions and laser-guided micro-accounting models.",
@@ -87,7 +144,7 @@ export default function OutcomesSection() {
       title: "Etery",
       category: "E-commerce",
       description: "Tactile material-black composite equipment styling combined with fluid shopping portals to unlock premium customer actions.",
-      imageUrl: "/src/assets/images/etery_device_1779984882142.png",
+      imageUrl: "/src/assets/images/brand_identity_mockup_1779960773588.png",
       bgColor: "bg-[#1C202E]",
       accentColor: "#FF6230",
       tagline: "Simplifying premium audio design systems through tactile custom state managers and buttons.",
@@ -107,37 +164,48 @@ export default function OutcomesSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="case-studies"
-      className="relative w-full py-24 px-4 sm:px-8 md:px-12 lg:px-20 bg-white"
+      className="relative w-full bg-white overflow-hidden"
     >
-      {/* Structural layout row matching the screenshot */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-16 relative z-10 text-left">
-        <div className="flex flex-col items-start">
-          {/* Accent Badge */}
-          <div className="bg-[#1A2540] text-white px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest mb-5 flex items-center gap-1.5 shadow-xs">
-            Work
+      {/* Horizontally scrolling track */}
+      <div
+        ref={trackRef}
+        className="flex items-stretch will-change-transform"
+        style={{ width: "fit-content" }}
+      >
+        {/* First panel: Section header (viewport-width) */}
+        <div className="w-screen h-screen flex items-center shrink-0 px-4 sm:px-8 md:px-12 lg:px-20">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-start text-left">
+            <div className="flex flex-col items-start">
+              {/* Accent Badge */}
+              <div className="bg-[#1A2540] text-white px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest mb-5 flex items-center gap-1.5 shadow-xs">
+                Work
+              </div>
+
+              <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl tracking-tight leading-tight">
+                The outcomes we've got.
+              </h2>
+            </div>
+
+            {/* Right strategic description */}
+            <div className="flex items-center h-full md:pt-10">
+              <p className="text-slate-500 font-sans text-sm sm:text-base font-normal leading-relaxed max-w-lg">
+                A look at some of the brands we've helped — and the outcomes we've delivered with precision engineering and high fidelity design.
+              </p>
+            </div>
           </div>
-
-          <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl tracking-tight leading-tight">
-            The outcomes we've got.
-          </h2>
         </div>
 
-        {/* Right strategic description */}
-        <div className="flex items-center h-full md:pt-10">
-          <p className="text-slate-500 font-sans text-sm sm:text-base font-normal leading-relaxed max-w-lg">
-            A look at some of the brands we've helped — and the outcomes we've delivered with precision engineering and high fidelity design.
-          </p>
-        </div>
-      </div>
-
-      {/* Grid container replicating the visual mock accurately */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6" id="outcomes-cards-grid">
+        {/* Project cards row */}
         {cases.map((study) => (
           <div
             key={study.id}
             onClick={() => setSelectedCase(study)}
-            className="group relative overflow-hidden rounded-[24px] border border-slate-100/80 cursor-pointer bg-slate-50 aspect-[4/3] flex flex-col justify-end transition-all duration-500 hover:shadow-lg hover:border-slate-200/40"
+            onMouseEnter={() => setHoveredCardId(study.id)}
+            onMouseLeave={() => setHoveredCardId(null)}
+            className="group relative overflow-hidden rounded-[24px] border border-slate-100/80 cursor-none bg-slate-50 flex flex-col justify-end transition-all duration-500 hover:shadow-lg hover:border-slate-200/40 shrink-0 my-8 mr-6"
+            style={{ width: "clamp(340px, 38vw, 580px)", height: "calc(100vh - 4rem)" }}
           >
             {/* Main high fidelity device mockup image */}
             <div className="absolute inset-0 w-full h-full">
@@ -170,23 +238,16 @@ export default function OutcomesSection() {
             </div>
           </div>
         ))}
+
+        {/* Trailing spacer so the last card can fully enter the viewport */}
+        <div className="shrink-0" style={{ width: "10vw" }} />
       </div>
 
-      {/* Styledcentered View all projects button matching reference exactly */}
-      <div className="flex justify-center mt-12">
-        <button
-          onClick={() => {
-            const el = document.getElementById("faq-section");
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          }}
-          className="px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/80 rounded-full font-sans font-bold text-xs sm:text-sm shadow-xs transition-all duration-200 flex items-center gap-3.5 cursor-pointer active:scale-95"
-        >
-          <span className="font-sans font-bold tracking-tight">View all projects</span>
-          <div className="w-7 h-7 rounded-full bg-[#111827] text-white flex items-center justify-center shrink-0">
-            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
-          </div>
-        </button>
-      </div>
+      {/* Left gradient edge fade */}
+      <div className="absolute top-0 left-0 w-24 sm:w-32 lg:w-48 h-full bg-gradient-to-r from-white via-white/70 to-transparent pointer-events-none z-20" />
+
+      {/* Right gradient edge fade */}
+      <div className="absolute top-0 right-0 w-24 sm:w-32 lg:w-48 h-full bg-gradient-to-l from-white via-white/70 to-transparent pointer-events-none z-20" />
 
       {/* Interactive Modal Details Overlay */}
       <AnimatePresence>
@@ -322,6 +383,28 @@ export default function OutcomesSection() {
           </>
         )}
       </AnimatePresence>
+
+      {/* Custom Hover Follow Cursor */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full bg-white/20 backdrop-blur-md border border-white/50 shadow-[0_16px_36px_rgba(0,0,0,0.15)] flex items-center justify-center w-14 h-14 -ml-7 -mt-7"
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+        }}
+        animate={{
+          scale: hoveredCardId ? 1 : 0,
+          opacity: hoveredCardId ? 1 : 0,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 350,
+          damping: 26,
+        }}
+      >
+        <div className="w-9 h-9 rounded-full bg-white/55 flex items-center justify-center shadow-xs border border-white/70">
+          <ArrowUpRight className="w-4.5 h-4.5 text-[#1A2540] stroke-[3]" />
+        </div>
+      </motion.div>
 
     </section>
   );
