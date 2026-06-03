@@ -45,7 +45,7 @@ export default function OutcomesSection() {
     };
   }, [cursorX, cursorY]);
 
-  // GSAP horizontal scroll pinning
+  // GSAP horizontal scroll pinning & parallax
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
@@ -57,7 +57,7 @@ export default function OutcomesSection() {
         return -(track.scrollWidth - window.innerWidth);
       };
 
-      gsap.to(track, {
+      const scrollTween = gsap.to(track, {
         x: getScrollAmount,
         ease: "none",
         scrollTrigger: {
@@ -69,6 +69,29 @@ export default function OutcomesSection() {
           invalidateOnRefresh: true,
           anticipatePin: 1,
         },
+      });
+
+      // Parallax effect on background images relative to scroll horizontal velocity
+      const cards = gsap.utils.toArray<HTMLElement>(".project-card");
+      cards.forEach((card) => {
+        const wrap = card.querySelector(".parallax-wrap");
+        if (!wrap) return;
+
+        gsap.fromTo(
+          wrap,
+          { xPercent: -7 },
+          {
+            xPercent: 7,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              containerAnimation: scrollTween,
+              start: "left right",
+              end: "right left",
+              scrub: true,
+            },
+          }
+        );
       });
     });
 
@@ -176,21 +199,21 @@ export default function OutcomesSection() {
       >
         {/* First panel: Section header (viewport-width) */}
         <div className="w-screen h-screen flex items-center shrink-0 px-4 sm:px-8 md:px-12 lg:px-20">
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-start text-left">
+          <div className="max-w-4xl mx-auto w-full flex flex-col gap-6 md:gap-8 items-start text-left">
             <div className="flex flex-col items-start">
               {/* Accent Badge */}
               <div className="bg-[#1A2540] text-white px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest mb-5 flex items-center gap-1.5 shadow-xs">
                 Work
               </div>
 
-              <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl tracking-tight leading-tight">
+              <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight">
                 The outcomes we've got.
               </h2>
             </div>
 
-            {/* Right strategic description */}
-            <div className="flex items-center h-full md:pt-10">
-              <p className="text-slate-500 font-sans text-sm sm:text-base font-normal leading-relaxed max-w-lg">
+            {/* Strategic description */}
+            <div className="flex items-center">
+              <p className="text-slate-500 font-sans text-sm sm:text-base md:text-lg font-normal leading-relaxed max-w-2xl">
                 A look at some of the brands we've helped — and the outcomes we've delivered with precision engineering and high fidelity design.
               </p>
             </div>
@@ -204,50 +227,48 @@ export default function OutcomesSection() {
             onClick={() => setSelectedCase(study)}
             onMouseEnter={() => setHoveredCardId(study.id)}
             onMouseLeave={() => setHoveredCardId(null)}
-            className="group relative overflow-hidden rounded-[24px] border border-slate-100/80 cursor-none bg-slate-50 flex flex-col justify-end transition-all duration-500 hover:shadow-lg hover:border-slate-200/40 shrink-0 my-8 mr-6"
-            style={{ width: "clamp(340px, 38vw, 580px)", height: "calc(100vh - 4rem)" }}
+            className="project-card group relative overflow-hidden cursor-none bg-slate-50 flex flex-col justify-end transition-all duration-500 shrink-0 w-screen h-screen"
           >
-            {/* Main high fidelity device mockup image */}
-            <div className="absolute inset-0 w-full h-full">
-              <img
-                src={study.imageUrl}
-                alt={study.title}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] will-change-transform"
-              />
+            {/* Main high fidelity device mockup image with parallax wrapper */}
+            <div className="absolute inset-0 w-full h-full overflow-hidden">
+              <div 
+                className="parallax-wrap absolute inset-y-0 w-[120%] h-full"
+                style={{ left: "-10%" }}
+              >
+                <img
+                  src={study.imageUrl}
+                  alt={study.title}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                />
+              </div>
             </div>
 
             {/* Gradient shadow overlay behind content so text is readable */}
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none" />
 
             {/* White floating card layout matching reference exactly */}
-            <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 flex items-center justify-between shadow-xs border border-white/40 transition-all duration-300 group-hover:shadow-md group-hover:bg-white z-10">
+            <div className="absolute bottom-12 left-4 sm:left-8 md:left-12 lg:left-20 w-[calc(100%-2rem)] sm:w-[480px] bg-white/95 backdrop-blur-md rounded-2xl p-6 sm:p-8 flex items-center justify-between shadow-lg border border-white/40 transition-all duration-300 group-hover:shadow-xl group-hover:bg-white z-10">
               <div className="text-left">
-                <h3 className="text-[#1A2540] font-sans font-bold text-sm sm:text-base tracking-tight leading-none mb-1 shadow-none">
+                <span className="text-[#FF6230] font-sans text-xs font-bold uppercase tracking-wider mb-2 block">
+                  {study.category}
+                </span>
+                <h3 className="text-[#1A2540] font-sans font-black text-xl sm:text-2xl tracking-tight leading-tight shadow-none mb-1">
                   {study.title}
                 </h3>
-                <p className="text-slate-500 font-sans text-xs font-normal">
-                  {study.category}
+                <p className="text-slate-500 font-sans text-xs sm:text-sm font-normal line-clamp-2">
+                  {study.description}
                 </p>
               </div>
 
               {/* Box diagonal arrow container */}
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#111827] group-hover:bg-[#FF6230] text-white flex items-center justify-center transition-all duration-300 shadow-sm shrink-0">
-                <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+              <div className="w-12 h-12 rounded-xl bg-[#111827] group-hover:bg-[#FF6230] text-white flex items-center justify-center transition-all duration-300 shadow-sm shrink-0 ml-6">
+                <ArrowUpRight className="w-6 h-6 stroke-[2.5]" />
               </div>
             </div>
           </div>
         ))}
-
-        {/* Trailing spacer so the last card can fully enter the viewport */}
-        <div className="shrink-0" style={{ width: "10vw" }} />
       </div>
-
-      {/* Left gradient edge fade */}
-      <div className="absolute top-0 left-0 w-24 sm:w-32 lg:w-48 h-full bg-gradient-to-r from-white via-white/70 to-transparent pointer-events-none z-20" />
-
-      {/* Right gradient edge fade */}
-      <div className="absolute top-0 right-0 w-24 sm:w-32 lg:w-48 h-full bg-gradient-to-l from-white via-white/70 to-transparent pointer-events-none z-20" />
 
       {/* Interactive Modal Details Overlay */}
       <AnimatePresence>
