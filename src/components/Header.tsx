@@ -104,10 +104,41 @@ export default function Header({ onNavClick }: HeaderProps) {
 
   return (
     <>
+      {/* Liquid-glass filter: wavy displacement map, with R/G/B channels
+          displaced at slightly different scales to fake light dispersion
+          (chromatic aberration), then recombined. Referenced by
+          .progressive-blur::before via backdrop-filter: url(). */}
+      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+        <filter id="glass-aberration" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.004 0.014" numOctaves="1" seed="7" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="2" result="map" />
+
+          <feDisplacementMap in="SourceGraphic" in2="map" scale="34" xChannelSelector="R" yChannelSelector="G" result="dispR" />
+          <feColorMatrix in="dispR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red" />
+
+          <feDisplacementMap in="SourceGraphic" in2="map" scale="26" xChannelSelector="R" yChannelSelector="G" result="dispG" />
+          <feColorMatrix in="dispG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green" />
+
+          <feDisplacementMap in="SourceGraphic" in2="map" scale="18" xChannelSelector="R" yChannelSelector="G" result="dispB" />
+          <feColorMatrix in="dispB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue" />
+
+          <feBlend in="red" in2="green" mode="screen" result="rg" />
+          <feBlend in="rg" in2="blue" mode="screen" />
+        </filter>
+      </svg>
+
       <header
         id="main-app-header"
-        className={`fixed top-0 left-0 w-full z-50 px-4 md:px-12 lg:[padding-left:150px] lg:[padding-right:150px] flex items-center justify-between h-[75px] md:h-[80px] before:absolute before:inset-0 before:-z-10 before:backdrop-blur-xl before:[mask-image:linear-gradient(to_bottom,black_0%,black_25%,transparent_100%)]`}
+        className={`fixed top-0 left-0 w-full z-50 px-4 md:px-12 lg:[padding-left:150px] lg:[padding-right:150px] flex items-center justify-between h-[75px] md:h-[80px]`}
       >
+        {/* Progressive blur backdrop: blur strength ramps down layer by layer */}
+        <div className="progressive-blur" aria-hidden="true">
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+
         {/* Brand Logo Group */}
         <div className="flex items-center" id="brand-logo-container">
           <img

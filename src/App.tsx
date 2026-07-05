@@ -12,6 +12,7 @@ import ProcessSection from "./components/ProcessSection";
 import OutcomesSection from "./components/OutcomesSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import FaqSection from "./components/FaqSection";
+import FooterNew from "./components/FooterNew";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 80 },
@@ -70,7 +71,7 @@ export default function App() {
       }} />
 
       {/* Main Container Hero Wrapper */}
-      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 pt-[140px] md:pt-[160px] pb-12">
+      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 pt-[110px] md:pt-[120px] pb-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center">
           
           {/* Left Column Content Area */}
@@ -171,8 +172,8 @@ export default function App() {
 
           </div>
 
-          {/* Right Column Scrolling Grid Module */}
-          <div className="md:col-span-6 z-10 w-full overflow-hidden">
+          {/* Right Column Scrolling Grid Module — pulled up to the very top of the page so the images flow behind the glass navbar */}
+          <div className="md:col-span-6 z-10 w-full md:-mt-[120px]">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -236,37 +237,7 @@ export default function App() {
       </motion.div>
 
       {/* Footer Branding Showcase */}
-      <motion.footer
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        className="w-full bg-slate-50 border-t border-slate-100 py-12 px-6 md:px-12 lg:px-20 text-center" id="footer-branding">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center">
-              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
-                <path d="M17 5L7 19" stroke="#FF6230" strokeWidth="4" strokeLinecap="round" />
-                <path d="M7 5H17V15" stroke="#1A2540" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <span className="text-slate-700 font-sans font-bold text-sm tracking-tight">
-              Kompozith <span className="text-[#FF6230] font-serif italic font-semibold">Studio</span>
-            </span>
-          </div>
-
-          <div className="text-slate-400 font-mono text-[11px] tracking-wide">
-            © 2026 Kompozith Studio. All rights reserved. Deliberate interactive precision.
-          </div>
-
-          <div className="flex items-center gap-1 bg-white border border-slate-200/60 px-3 py-1.5 rounded-full shadow-3xs">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-            <span className="text-slate-500 font-sans font-semibold text-[10px] tracking-wide uppercase">
-              Secure Submission API
-            </span>
-          </div>
-        </div>
-      </motion.footer>
+      <FooterNew />
 
       {/* Sliding Slideover Contact Drawer Component */}
       <AnimatePresence>

@@ -5,4 +5,67 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --animate-fade-in: fade-in 0.3s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Progressive blur: stacked backdrop-filter layers, each masked to its own
+   vertical band so blur strength genuinely ramps down instead of one blur
+   fading out through a single mask. Strongest blur sits at the very top. */
+.progressive-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 140%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Liquid-glass refraction layer: SVG displacement map + per-channel
+   chromatic aberration (defined in Header.tsx), painted beneath the blur
+   layers so the frost sits on top of the distorted backdrop. */
+.progressive-blur::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: url(#glass-aberration) saturate(1.35);
+  mask-image: linear-gradient(to bottom, black 0%, black 35%, transparent 85%);
+}
+
+.progressive-blur > div {
+  position: absolute;
+  inset: 0;
+}
+
+.progressive-blur > div:nth-child(1) {
+  backdrop-filter: blur(10px);
+  mask-image: linear-gradient(to bottom, black 0%, black 20%, transparent 40%);
+}
+
+.progressive-blur > div:nth-child(2) {
+  backdrop-filter: blur(5px);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 40%, transparent 60%);
+}
+
+.progressive-blur > div:nth-child(3) {
+  backdrop-filter: blur(2.5px);
+  mask-image: linear-gradient(to bottom, transparent 20%, black 40%, black 60%, transparent 80%);
+}
+
+.progressive-blur > div:nth-child(4) {
+  backdrop-filter: blur(1px);
+  mask-image: linear-gradient(to bottom, transparent 40%, black 60%, black 80%, transparent 100%);
 }
