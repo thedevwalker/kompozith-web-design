@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, Minus, ArrowUpRight, HelpCircle } from "lucide-react";
+import RevealTitle from "./RevealTitle";
 
 interface FaqItem {
   id: string;
@@ -69,10 +70,13 @@ export default function FaqSection() {
           </div>
 
           {/* Staggered Big Header Stack */}
-          <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[0.95]">
-            Questions?<br />
-            <span className="text-slate-400">Answers.</span>
-          </h2>
+          <RevealTitle
+            segments={[
+              { text: "Questions?" },
+              { text: "Answers.", className: "text-slate-400", breakBefore: true },
+            ]}
+            className="text-[#1A2540] font-sans font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[0.95]"
+          />
 
           <p className="text-slate-500 font-sans text-xs sm:text-sm md:text-md leading-relaxed font-normal max-w-xs pt-1">
             Everything you need to know about our design subscription service.

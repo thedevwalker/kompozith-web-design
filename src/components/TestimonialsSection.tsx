@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Star, MessageSquareCode, Check, Send, AlertCircle } from "lucide-react";
+import RevealTitle from "./RevealTitle";
 
 interface Testimonial {
   id: string;
@@ -81,9 +82,10 @@ export default function TestimonialsSection() {
             Reviews
           </div>
 
-          <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl lg:text-5.5xl tracking-tight leading-none">
-            Success Stories.
-          </h2>
+          <RevealTitle
+            segments="Success Stories."
+            className="text-[#1A2540] font-sans font-bold text-4xl sm:text-5xl lg:text-5.5xl tracking-tight leading-none"
+          />
         </div>
 
         {/* Right strategic description */}

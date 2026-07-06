@@ -83,17 +83,6 @@ export default function ScrollingImagesGrid() {
         },
       });
 
-      // 4. Parallax scroll effect for depth (subtle vertical shift of the whole container itself)
-      gsap.to(container, {
-        y: -40,
-        ease: "none",
-        scrollTrigger: {
-          trigger: container,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2,
-        },
-      });
     });
 
     return () => ctx.revert();
@@ -123,12 +112,12 @@ export default function ScrollingImagesGrid() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[750px] md:h-[870px] overflow-hidden grid grid-cols-2 gap-4 lg:gap-6 px-2 md:px-4"
+      className="relative w-full h-[750px] md:h-full overflow-hidden grid grid-cols-2 gap-4 lg:gap-6 px-2 md:px-4"
       id="rotating-portfolio-grid"
     >
-      {/* Viewport atmospheric fade overlays (Top kept light so images stay visible behind the glass navbar) */}
+      {/* Top fade kept light so images stay visible behind the glass navbar.
+          (The glassy bottom overlay lives in App.tsx so it spans the whole hero.) */}
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#FAFBFD]/60 to-transparent pointer-events-none z-30" />
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#FAFBFD] via-[#FAFBFD]/80 to-transparent pointer-events-none z-30" />
 
       {/* Column 1: Infinite Scrolling UP */}
       <div className="relative h-full overflow-hidden">

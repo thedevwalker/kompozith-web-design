@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import { Mail, Phone, MessageSquare, Send, CheckCircle2, User, Globe, FileText, ArrowRight, ShieldCheck } from "lucide-react";
 
@@ -13,6 +15,8 @@ import OutcomesSection from "./components/OutcomesSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import FaqSection from "./components/FaqSection";
 import FooterNew from "./components/FooterNew";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 80 },
@@ -39,6 +43,34 @@ export default function App() {
     };
   }, []);
 
+  // Dark-theme window: dark once the process section is 40% into the viewport,
+  // light again as soon as the reviews section enters. A single class toggle —
+  // CSS variables + transitions do the animating, nothing runs per scroll frame.
+  useEffect(() => {
+    const setDark = (on: boolean) =>
+      document.documentElement.classList.toggle("theme-dark", on);
+
+    const enterDark = ScrollTrigger.create({
+      trigger: "#process-section",
+      start: "top 60%",
+      onEnter: () => setDark(true),
+      onLeaveBack: () => setDark(false),
+    });
+
+    const exitDark = ScrollTrigger.create({
+      trigger: "#testimonials",
+      start: "top bottom",
+      onEnter: () => setDark(false),
+      onLeaveBack: () => setDark(true),
+    });
+
+    return () => {
+      enterDark.kill();
+      exitDark.kill();
+      setDark(false);
+    };
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
@@ -51,7 +83,7 @@ export default function App() {
   };
 
   return (
-    <div id="hero-top" className="relative min-h-screen w-full bg-[#FAFBFD] text-slate-800 font-sans overflow-x-hidden transition-colors duration-300">
+    <div id="hero-top" className="relative min-h-screen w-full bg-[var(--theme-bg)] text-slate-800 font-sans overflow-x-hidden">
       
       {/* SVG-based Guideline & Crosshair Backdrop */}
       <LinesBackground />
@@ -71,8 +103,8 @@ export default function App() {
       }} />
 
       {/* Main Container Hero Wrapper */}
-      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 pt-[110px] md:pt-[120px] pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center">
+      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 pt-[110px] md:pt-[120px] pb-12 md:pb-0">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center md:min-h-[750px]">
           
           {/* Left Column Content Area */}
           <div className="md:col-span-6 flex flex-col items-start text-left space-y-7 z-20">
@@ -172,17 +204,29 @@ export default function App() {
 
           </div>
 
-          {/* Right Column Scrolling Grid Module — pulled up to the very top of the page so the images flow behind the glass navbar */}
-          <div className="md:col-span-6 z-10 w-full md:-mt-[120px]">
+          {/* Right Column Scrolling Grid Module — pulled up to the very top of the page so the
+              images flow behind the glass navbar, stretched so it always ends flush with the hero bottom */}
+          <div className="md:col-span-6 z-10 w-full md:-mt-[120px] md:self-stretch md:relative">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35, duration: 0.7, ease: "easeOut" }}
+              className="md:absolute md:inset-0"
             >
               <ScrollingImagesGrid />
             </motion.div>
           </div>
 
+        </div>
+
+        {/* Glassy distorted edge covering the entire bottom of the hero, full-bleed */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-screen h-[120px] pointer-events-none z-30">
+          <div className="progressive-blur-bottom" aria-hidden="true">
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
         </div>
       </main>
 

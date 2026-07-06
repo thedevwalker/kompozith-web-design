@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Sparkles } from "lucide-react";
+import RevealTitle from "./RevealTitle";
 
 const containerVariants = {
   hidden: {},
@@ -75,7 +75,7 @@ export default function ServicesSection() {
     },
     {
       id: "service-websites",
-      title: "Websites Developement",
+      title: "Web Developement",
       description: "Launch a revenue-driving site that captures qualified leads 24/7 — shipped in 30 days.",
       tags: ["UI/UX DESIGN", "INTEGRATIONS", "CMS INTEGRATION", "ANIMATION"],
       imageUrl: "/src/assets/images/service_website_desktop_1779961535663.png",
@@ -113,9 +113,10 @@ export default function ServicesSection() {
             Our services
           </div>
 
-          <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl lg:text-5.5xl tracking-tight leading-none">
-            What we do.
-          </h2>
+          <RevealTitle
+            segments="What we do."
+            className="text-[#1A2540] font-sans font-bold text-4xl sm:text-5xl lg:text-5.5xl tracking-tight leading-none"
+          />
         </div>
 
         {/* Right strategic description */}
@@ -132,17 +133,17 @@ export default function ServicesSection() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto relative z-10" 
+        className="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4 max-w-7xl mx-auto relative z-10"
         id="services-grid-wrapper"
       >
         {cards.map((card) => (
           <motion.div
             key={card.id}
             variants={cardVariants}
-            className="group flex flex-col bg-[#F4F6FB] border border-[#E4E9F2]/70 p-3.5 rounded-[28px] shadow-xs hover:shadow-md hover:border-slate-200/80 transition-all duration-500 ease-out text-left"
+            className="group flex flex-col bg-[#F4F6FB] p-[5px] rounded-[14px] text-left"
           >
             {/* White card container (top half) */}
-            <div className="bg-white p-7 rounded-2xl flex flex-col items-start justify-between min-h-[310px] sm:min-h-[320px] shadow-2xs border border-[#F0F2F6]">
+            <div className="bg-white p-7 rounded-[8px] flex flex-col items-start justify-between min-h-[310px] sm:min-h-[320px]">
               {/* Logo / Brand container */}
               <div className="mb-4">
                 {card.logo}
@@ -163,7 +164,7 @@ export default function ServicesSection() {
                 {card.tags.map((tag) => (
                   <div key={tag} className="flex items-center gap-1.5 overflow-hidden">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#FF6230] shrink-0" />
-                    <span className="text-[10px] sm:text-[10.5px] font-mono font-bold tracking-wide text-slate-500 uppercase truncate">
+                    <span className="text-[9px] sm:text-[9.5px] font-sans font-semibold tracking-wide text-slate-500 uppercase truncate">
                       {tag}
                     </span>
                   </div>
@@ -172,7 +173,7 @@ export default function ServicesSection() {
             </div>
 
             {/* Mockup Card image container (bottom half) */}
-            <div className="mt-3.5 overflow-hidden rounded-2xl aspect-[4/3] w-full relative z-0">
+            <div className="mt-[5px] overflow-hidden rounded-[8px] aspect-[4/3] w-full relative z-0">
               <img
                 src={card.imageUrl}
                 alt={card.title}

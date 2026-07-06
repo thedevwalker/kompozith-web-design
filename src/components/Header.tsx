@@ -16,7 +16,6 @@ export default function Header({ onNavClick }: HeaderProps) {
     { name: "Services", id: "services-section" },
     { name: "Our process", id: "process-section" },
     { name: "Case Studies", id: "case-studies" },
-    { name: "Contact", id: "contact" },
   ];
 
   const isManualScroll = useRef(false);

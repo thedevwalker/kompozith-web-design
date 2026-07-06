@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from "motion/react
 import { ArrowUpRight, CheckCircle2, Sparkles, X, ChevronRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RevealTitle from "./RevealTitle";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,9 +66,10 @@ export default function OutcomesSection() {
           start: "top top",
           end: () => `+=${Math.abs(getScrollAmount())}`,
           pin: true,
-          scrub: 1,
+          // Direct 1:1 scrub — Lenis already smooths the scroll, so any extra
+          // smoothing here made the track lag past its pin point.
+          scrub: true,
           invalidateOnRefresh: true,
-          anticipatePin: 1,
         },
       });
 
@@ -95,7 +97,20 @@ export default function OutcomesSection() {
       });
     });
 
-    return () => ctx.revert();
+    // The pin's start position is measured on mount, but fonts, images and the
+    // hero geometry settle later and shift every offset below them — refresh
+    // once everything has loaded so the pin engages exactly at "top top".
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    document.fonts?.ready.then(refresh);
+    const imgs = Array.from(track.querySelectorAll("img")).filter((i) => !i.complete);
+    imgs.forEach((img) => img.addEventListener("load", refresh, { once: true }));
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      imgs.forEach((img) => img.removeEventListener("load", refresh));
+      ctx.revert();
+    };
   }, []);
 
   const cases: CaseStudy[] = [
@@ -189,7 +204,7 @@ export default function OutcomesSection() {
     <section
       ref={sectionRef}
       id="case-studies"
-      className="relative w-full bg-white overflow-hidden"
+      className="relative w-full bg-[var(--theme-bg)] overflow-hidden"
     >
       {/* Horizontally scrolling track */}
       <div
@@ -202,18 +217,19 @@ export default function OutcomesSection() {
           <div className="max-w-4xl mx-auto w-full flex flex-col gap-6 md:gap-8 items-start text-left">
             <div className="flex flex-col items-start">
               {/* Accent Badge */}
-              <div className="bg-[#1A2540] text-white px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest mb-5 flex items-center gap-1.5 shadow-xs">
+              <div className="bg-[var(--theme-ink)] text-[var(--theme-bg)] px-4 py-1.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-widest mb-5 flex items-center gap-1.5 shadow-xs">
                 Work
               </div>
 
-              <h2 className="text-[#1A2540] font-sans font-black text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight">
-                The outcomes we've got.
-              </h2>
+              <RevealTitle
+                segments="The outcomes we've got."
+                className="text-[var(--theme-ink)] font-sans font-bold text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight"
+              />
             </div>
 
             {/* Strategic description */}
             <div className="flex items-center">
-              <p className="text-slate-500 font-sans text-sm sm:text-base md:text-lg font-normal leading-relaxed max-w-2xl">
+              <p className="text-[var(--theme-muted)] font-sans text-sm sm:text-base md:text-lg font-normal leading-relaxed max-w-2xl">
                 A look at some of the brands we've helped — and the outcomes we've delivered with precision engineering and high fidelity design.
               </p>
             </div>

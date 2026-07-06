@@ -32,7 +32,7 @@ export const column1Items: PortfolioItem[] = [
     id: "col1-3",
     title: "Minimalist Mobile Interaction & Micro-flows",
     category: "App Design",
-    imageUrl: "https://images.unsplash.com/photo-1541462608141-27b2c7453c6e?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/src/assets/images/service_product_app_1779961518796.png",
     bgColor: "bg-purple-100",
     userHandle: "@goflow"
   },
@@ -77,7 +77,7 @@ export const column2Items: PortfolioItem[] = [
     id: "col2-4",
     title: "Creative Multi-Disciplinary Design Services",
     category: "Strategy & Art",
-    imageUrl: "https://images.unsplash.com/photo-1634973357973-f2ed255753e1?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/src/assets/images/service_brand_cards_1779961502424.png",
     bgColor: "bg-amber-50",
     userHandle: "@studiounify"
   }

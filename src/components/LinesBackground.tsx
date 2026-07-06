@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 
 export default function LinesBackground() {
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden select-none z-0">
+    <div className="guide-lines absolute inset-0 w-full h-full pointer-events-none overflow-hidden select-none z-0">
       <svg
         className="w-full h-full text-slate-200/60"
         aria-hidden="true"
